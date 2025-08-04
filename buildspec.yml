@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "=== Starting build at $(date) ==="
+      - if [ -d "node_modules" ]; then echo "Cache HIT - node_modules exists"; else echo "Cache MISS - node_modules not found"; fi
+      - time npm install
+      - echo "=== Finished build at $(date) ==="
+      - du -sh node_modules
+      - find node_modules -type d -maxdepth 1 | wc -l
+
+artifacts:
+  files: 
+    - package.json
+    - package-lock.json
+  
+cache:
+  key: npm-$(codebuild-hash-files 'package-lock.json')
+  paths:
+    - 'node_modules/**/*'
