@@ -16,6 +16,6 @@ artifacts:
     - package-lock.json
   
 cache:
-  key: npm-$(codebuild-hash-files 'package-lock.json')
   paths:
     - 'node_modules/**/*'
+
